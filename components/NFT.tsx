@@ -20,7 +20,7 @@ export default function NFTComponent({ nft }: Props) {
             tokenId: nft.metadata.id,
         });
     return (
-        <Flex direction={"column"} backgroundColor={"#EEE"} justifyContent={"center"} padding={""}>
+        <Flex direction={"column"} backgroundColor={"#EEE"} justifyContent={"center"} padding={"12px"}>
             <Box borderRadius={"4px"} overflow={"hidden"}>
                 <ThirdwebNftMedia metadata={nft.metadata} height={"100%"} width={"100%"} />
             </Box>

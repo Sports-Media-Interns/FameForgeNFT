@@ -18,7 +18,7 @@ export default function NFTGrid({
     emptyText = "No NFTs found",
 }: Props) {
     return (
-        <SimpleGrid column={4} spacing={6} w={"100%"} padding={2.5} my={5}>
+        <SimpleGrid columns={4} spacing={6} w={"100%"} padding={2.5} my={5}>
             {isLoading ? (
                 [...Array(20)].map((_, index) => (
                     <Skeleton key={index} height={"312px"} width={"100%"} />

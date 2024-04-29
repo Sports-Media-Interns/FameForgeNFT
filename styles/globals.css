@@ -1,14 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Inter", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: #84309c;
+  color: #7dd3fc;
   text-decoration: none;
 }
 
@@ -16,7 +15,10 @@ a {
   box-sizing: border-box;
 }
 
+html {
+  color-scheme: dark;
+}
 body {
   color: #e7e8e8;
-  background: #070707;
+  background: #0f1318;
 }

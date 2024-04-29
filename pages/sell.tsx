@@ -1,4 +1,4 @@
-import { Box, Button, Card, Container, Flex, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
+import { Button, Card, Container, Flex, Heading, SimpleGrid, Stack, Text } from "@chakra-ui/react";
 import { ThirdwebNftMedia, useAddress, useContract, useOwnedNFTs } from "@thirdweb-dev/react";
 import React, { useState } from "react";
 import { NFT_COLLECTION_ADDRESS } from "../const/addresses";
@@ -24,7 +24,7 @@ export default function Sell() {
                     overrideOnclickBehavior={(nft) => {
                         setSelectedNFT(nft);
                     }}
-                    emptyText={"You don't own any NFTs yest from this collection"}
+                    emptyText={"You don't own any NFTs yet from this collection."}
                 />
             ) : (
                 <Flex justifyContent={"center"} my={10}>
@@ -37,10 +37,7 @@ export default function Sell() {
                             />
                             <Stack>
                                 <Flex justifyContent={"right"}>
-                                    <Button
-                                        onClick={() => {
-                                            setSelectedNFT(undefined);
-                                        }}
+                                    <Button onClick={() => { setSelectedNFT(undefined); }}
                                     >X</Button>
                                 </Flex>
                                 <Heading>{selectedNFT.metadata.name}</Heading>
@@ -54,4 +51,4 @@ export default function Sell() {
             )}
         </Container>
     )
-}
+};

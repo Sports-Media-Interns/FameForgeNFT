@@ -1,5 +1,5 @@
 import { Avatar, Box, Container, Flex, Input, SimpleGrid, Skeleton, Stack, Text } from "@chakra-ui/react";
-import { MediaRenderer, ThirdwebNftMedia, Web3Button, useContract, useMinimumNextBid, useValidDirectListings, useValidEnglishAuctions } from "@thirdweb-dev/react";
+import { MediaRenderer, ThirdwebNftMedia, Web3Button, useContract, useValidDirectListings, useValidEnglishAuctions } from "@thirdweb-dev/react";
 import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import React, { useState } from "react";
 import { MARKETPLACE_ADDRESS, NFT_COLLECTION_ADDRESS } from "../../../const/addresses";
@@ -229,8 +229,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
             };
         });
 
-        return {
-            paths,
-            fallback: "blocking",
-        };
+    return {
+        paths,
+        fallback: "blocking",
     };
+};

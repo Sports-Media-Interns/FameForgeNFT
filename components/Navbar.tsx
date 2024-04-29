@@ -9,7 +9,7 @@ export function Navbar() {
         <Box maxW={"1200px"} m={"auto"} py={"10px"} px={"40px"}>
             <Flex justifyContent={"space-between"} alignItems={"center"}>
                 <Link as={NextLink} href='/'>
-                    <Heading>FameForgeNFT</Heading>
+                    <Heading>FameForge NFTs</Heading>
                 </Link>
                 <Flex direction={"row"}>
                     <Link as={NextLink} href='/buy' mx={2.5}>
@@ -22,13 +22,12 @@ export function Navbar() {
                 <Flex dir={"row"} alignItems={"center"}>
                     <ConnectWallet/>
                     {address && (
-                        <Link as={NextLink} href={'/profile/${address}'}>
+                        <Link as={NextLink} href={`/profile/${address}`}>
                             <Avatar src='https://bit.ly/broken-link' ml={"20px"}/>
                         </Link>
                     )}
                 </Flex>
-
             </Flex>
         </Box>
     )
-}
+};

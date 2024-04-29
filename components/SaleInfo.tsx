@@ -1,3 +1,4 @@
+import React from "react";
 import { NFT as NFTType } from "@thirdweb-dev/sdk";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -82,14 +83,14 @@ export default function SaleInfo({ nft }: Props) {
     }
 
     const { register: registerAuction, handleSubmit: handleSubmitAuction } = useForm<AuctionFormData>({
-        defaultValues: {
-            nftContractAddress: NFT_COLLECTION_ADDRESS,
-            tokenId: nft.metadata.id,
-            startDate: new Date(),
-            endDate: new Date(),
-            floorPrice: "0",
-            buyoutPrice: "0",
-        },
+      defaultValues: {
+        nftContractAddress: NFT_COLLECTION_ADDRESS,
+        tokenId: nft.metadata.id,
+        startDate: new Date(),
+        endDate: new Date(),
+        floorPrice: "0",
+        buyoutPrice: "0",
+      },
     });
 
     async function handleSubmissionAuction(data: AuctionFormData) {
@@ -132,6 +133,7 @@ export default function SaleInfo({ nft }: Props) {
                                 {...registerDirect("endDate")}
                             />
                         </Box>
+                        <Box>
                             <Text fontWeight={"bold"}>Price:</Text>
                             <Input
                                 placeholder="0"
@@ -139,19 +141,16 @@ export default function SaleInfo({ nft }: Props) {
                                 type="number"
                                 {...registerDirect("price")}
                             />
-                            <Web3Button
-                                contractAddress={MARKETPLACE_ADDRESS}
-                                action={async () => {
-                                    await handleSubmitDirect(handleSubmissionDirect)();
-                                }}
-                                onSuccess={(txResult) => {
-                                    router.push(`/token/${NFT_COLLECTION_ADDRESS}/${nft.metadata.id}`);
-                                }}
-                            >Create Direct Listing</Web3Button>
+                        </Box>
+                        <Web3Button
+                            contractAddress={MARKETPLACE_ADDRESS}
+                            action={async () => { await handleSubmitDirect(handleSubmissionDirect)(); }}
+                            onSuccess={(txResult) => { router.push(`/token/${NFT_COLLECTION_ADDRESS}/${nft.metadata.id}`); }}
+                        >Create Direct Listing</Web3Button>
                     </Stack>
                 </TabPanel>
                 <TabPanel>
-                    <Stack spacing={8}>
+                <Stack spacing={8}>
                         <Box>
                             <Text>Listing starts on:</Text>
                             <Input
@@ -188,16 +187,12 @@ export default function SaleInfo({ nft }: Props) {
                         </Box>
                         <Web3Button
                             contractAddress={MARKETPLACE_ADDRESS}
-                            action={async () => {
-                                await handleSubmitAuction(handleSubmissionAuction)();
-                            }}
-                            onSuccess={(txResult) => {
-                                router.push(`/token/${NFT_COLLECTION_ADDRESS}/${nft.metadata.id}`);
-                            }}
+                            action={async () => { return await handleSubmitAuction(handleSubmissionAuction)(); }}
+                            onSuccess={(txResult) => { router.push(`/token/${NFT_COLLECTION_ADDRESS}/${nft.metadata.id}`); }}
                         >Create Auction Listing</Web3Button>
                     </Stack>
                 </TabPanel>
             </TabPanels>
         </Tabs>
     )
-}
+};

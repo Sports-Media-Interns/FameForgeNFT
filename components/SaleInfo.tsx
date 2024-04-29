@@ -83,14 +83,14 @@ export default function SaleInfo({ nft }: Props) {
     }
 
     const { register: registerAuction, handleSubmit: handleSubmitAuction } = useForm<AuctionFormData>({
-      defaultValues: {
+    defaultValues: {
         nftContractAddress: NFT_COLLECTION_ADDRESS,
         tokenId: nft.metadata.id,
         startDate: new Date(),
         endDate: new Date(),
         floorPrice: "0",
         buyoutPrice: "0",
-      },
+    },
     });
 
     async function handleSubmissionAuction(data: AuctionFormData) {
@@ -150,7 +150,7 @@ export default function SaleInfo({ nft }: Props) {
                     </Stack>
                 </TabPanel>
                 <TabPanel>
-                <Stack spacing={8}>
+                    <Stack spacing={8}>
                         <Box>
                             <Text>Listing starts on:</Text>
                             <Input

@@ -43,6 +43,6 @@ export default function NFTGrid({
             ) : (
                 <Text>{emptyText}</Text>
             )}
-        </SimpleGrid>        
+        </SimpleGrid>
     )
 };

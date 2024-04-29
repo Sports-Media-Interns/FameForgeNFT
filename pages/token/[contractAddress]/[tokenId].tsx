@@ -1,5 +1,5 @@
 import { Avatar, Box, Container, Flex, Input, SimpleGrid, Skeleton, Stack, Text } from "@chakra-ui/react";
-import { MediaRenderer, ThirdwebNftMedia, Web3Button, useContract, useMinimumNextBid, useValidDirectListings } from "@thirdweb-dev/react";
+import { MediaRenderer, ThirdwebNftMedia, Web3Button, useContract, useMinimumNextBid, useValidDirectListings, useValidEnglishAuctions } from "@thirdweb-dev/react";
 import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import React, { useState } from "react";
 import {
@@ -32,7 +32,11 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
     async function buyListing() {
         let txResult;
 
-        if(directListing?.[0]){
+        if (auctionListing?.[0]) {
+            txResult = await marketplace?.englishAuctions.buyoutAuction(
+                auctionListing[0].id
+            )
+        } else if (directListing?.[0]) {
             txResult = await marketplace?.directListings.buyFromListing(
                 directListing[0].id,
                 1
@@ -43,6 +47,33 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
 
         return txResult;
     }
+
+    async function createBidOffer() {
+        let txResult;
+
+        if (!bidValue || 0) {
+            return;
+        }
+
+        if (auctionListing?.[0]) {
+            txResult = await marketplace?.englishAuctions.makeBid(
+                auctionListing[0].id,
+                bidValue
+            );
+        } else {
+            throw new Error("No listing found");
+        }
+
+        return txResult;
+    }
+
+    const [bidValue, setBidValue] = useState<string>();
+
+    const { data: auctionListing, isLoading: loadingAuction } =
+        useValidEnglishAuctions(marketplace, {
+            tokenContract: NFT_COLLECTION_ADDRESS,
+            tokenId: nft.metadata.id,
+        });
 
     return (
         <Container maxW={"1200px"} p={5} my={5}>
@@ -108,11 +139,28 @@ export default function TokenPage({ nft, contractMetadata }: Props) {
                                     {directListing[0]?.currencyValuePerToken.displayValue}
                                     {" " + directListing[0]?.currencyValuePerToken.symbol}
                                 </Text>
+                            ) : auctionListing && auctionListing[0] ? (
+                                <Text fontSize={"3xl"} fontWeight={"bold"}>
+                                    {auctionListing[0]?.buyoutCurrencyValue.displayValue}
+                                    {" " + auctionListing[0]?.buyoutCurrencyValue.symbol}
+                                </Text>
                             ) : (
                                 <Text fontSize={"3xl"} fontWeight={"bold"}>Not for sale</Text>
                             )}
                         </Skeleton>
                     </Stack>
+                    <Skeleton isLoaded={!loadingAuction}>
+                        {auctionListing && auctionListing[0] && (
+                            <Flex direction={"column"}>
+                                <Text color={"darkgray"}>Bids starting from</Text>
+                                <Text fontSize={"3xl"} fontWeight={"bold"}>
+                                    {auctionListing[0]?.minimumBidCurrencyValue.displayValue}
+                                    {" " + auctionListing[0]?.buyoutCurrencyValue.symbol}
+                                </Text>
+                                <Text></Text>
+                            </Flex>
+                        )}
+                    </Skeleton>
                     <Skeleton isLoaded={!loadingMarketplace || !loadingDirectListing}>
                         <Web3Button
                             contractAddress={MARKETPLACE_ADDRESS}
